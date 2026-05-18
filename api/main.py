@@ -1,6 +1,8 @@
 # api/main.py
 # API FastAPI pour SenSante - Assistant pre-diagnostic medical
+
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import joblib
 import numpy as np
@@ -31,14 +33,29 @@ app = FastAPI(
     description="Assistant pre-diagnostic medical pour le Senegal",
     version="0.2.0"
 )
+# Autoriser les requetes depuis le frontend
+app.add_middleware(
+CORSMiddleware,
+allow_origins=["*"],
+# En dev : tout accepter
+allow_credentials=True,
+allow_methods=["*"],
+allow_headers=["*"],
+)
 # --- Charger le modele et les encodeurs au demarrage ---
 
 print("Chargement du modele...")
 
-model = joblib.load("models/model.pkl")
-le_sexe = joblib.load("models/encoder_sexe.pkl")
-le_region = joblib.load("models/encoder_region.pkl")
-feature_cols = joblib.load("models/feature_cols.pkl")
+# APRES
+print("Chargement du modele...")
+
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+model = joblib.load(os.path.join(BASE_DIR, "models", "model.pkl"))
+le_sexe = joblib.load(os.path.join(BASE_DIR, "models", "encoder_sexe.pkl"))
+le_region = joblib.load(os.path.join(BASE_DIR, "models", "encoder_region.pkl"))
+feature_cols = joblib.load(os.path.join(BASE_DIR, "models", "feature_cols.pkl"))
 
 print(f"Modele charge : {type(model).__name__}")
 print(f"Classes : {list(model.classes_)}")
