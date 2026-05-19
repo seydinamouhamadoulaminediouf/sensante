@@ -1,3 +1,12 @@
+---
+title: Sensante
+emoji: 🏥
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # SenSante
 
 Assistant de pre - diagnostic medical pour le Senegal .
@@ -10,11 +19,11 @@ grippe , typhoide ) a partir des symptomes du patient .
 
 ## Structure du projet
 
-- ` data / ` : Donnees patients ( CSV )
-- ` models / ` : Modele ML serialise
-- ` api / ` : API FastAPI
-- ` frontend / ` : Interface web
-- ` notebooks / ` : Scripts d'exploration
+- `data /` : Donnees patients ( CSV )
+- `models /` : Modele ML serialise
+- `api /` : API FastAPI
+- `frontend /` : Interface web
+- `notebooks /` : Scripts d'exploration
 
 ## Auteur
 
