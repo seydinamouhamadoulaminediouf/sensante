@@ -9,6 +9,8 @@ import numpy as np
 import os
 from dotenv import load_dotenv
 from groq import Groq
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -225,3 +227,10 @@ def explain(data: ExplainInput):
             f"Erreur lors de l'appel au LLM : {str(e)}")
 
     return ExplainOutput(explication=explication)
+# Servir le frontend comme fichier statique
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+@app.get("/")
+def serve_frontend():
+    """Servir la page d'accueil."""
+    return FileResponse("frontend/index.html")
